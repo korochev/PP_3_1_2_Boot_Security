@@ -1,0 +1,15 @@
+form {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+}
+
+form > * {
+    flex: 1 1 49%;
+    margin-bottom: 10px;
+}
+
+input {
+    padding:0;
+    height: 25px;
+}

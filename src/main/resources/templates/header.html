@@ -1,0 +1,15 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <header th:fragment="content">
+        <h1 style="font-size: 1.5em">
+            Nice to see you again,
+            <span th:text="${currentName}"></span>
+            <a href="/admin" th:if="${#httpServletRequest.requestURI == '/user'}"
+               sec:authorize="hasRole('ROLE_ADMIN')" style="margin-left: 15px">Admin panel</a>
+            <a href="/user" th:unless="${#httpServletRequest.requestURI == '/user'}"
+               style="margin-left: 10px">Personal account</a>
+            <a href="/logout" style="margin-left: 10px">Logout</a>
+        </h1>
+    </header>
+</body>
+</html>

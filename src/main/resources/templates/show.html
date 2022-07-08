@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+</head>
+<body>
+    <header th:replace="header :: content"></header>
+    <h3>User Info</h3>
+    <p>Login: <strong th:text="${User.getUsername()}">VALUE</strong></p>
+    <p>First name: <strong th:text="${User.getFirstName()}">VALUE</strong></p>
+    <p>Last name: <strong th:text="${User.getLastName()}">VALUE</strong></p>
+    <p>Age: <strong th:text="${User.getAge()}">VALUE</strong></p>
+    <p>Email: <strong th:text="${User.getEmail()}">VALUE</strong></p>
+    <p>Roles:
+        <strong th:each="role : ${User.getRoles()}" th:text="${' - ' + role.getName() + ' - '}">VALUE</strong>
+    </p>
+    <div style="display: flex" sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/admin/{id}/edit(id=${User.getId()})}" style="margin-right: 10px">Edit</a>
+        <form th:method="DELETE" th:action="@{/admin/{id}(id=${User.getId()})}">
+            <input type="submit" value="Delete"/>
+        </form>
+    </div>
+</body>
+</html>
