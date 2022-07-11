@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,7 +29,9 @@ public class User implements UserDetails {
 
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
+    @JoinTable(name="users_roles", joinColumns = @JoinColumn(name="role_id"), inverseJoinColumns = @JoinColumn(name =
+            "user_id"))
     private Set<Role> roles;
 
     public User() {
@@ -123,5 +126,21 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof User))
+            return false;
+        User user = (User) o;
+        return getId() == user.getId() && getAge() == user.getAge() && Objects.equals(getUsername(),
+                user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getRoles(), user.getRoles());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername(), getPassword(), getFirstName(), getLastName(), getAge(), getEmail(), getRoles());
     }
 }
