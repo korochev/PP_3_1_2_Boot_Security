@@ -12,12 +12,7 @@ public class Role implements GrantedAuthority {
     @Id
     private long id;
     private String name;
-    @Transient
-    @ManyToMany
-    @JoinTable(name="users_roles", joinColumns = @JoinColumn(name="role_id"), inverseJoinColumns = @JoinColumn(name =
-            "user_id"))
-    private Set<User> users;
-
+   
     public Role() {
     }
 
@@ -46,14 +41,6 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     @Override
     public String getAuthority() {
         return getName();
@@ -66,12 +53,11 @@ public class Role implements GrantedAuthority {
         if (!(o instanceof Role))
             return false;
         Role role = (Role) o;
-        return getId() == role.getId() && Objects.equals(getName(), role.getName()) && Objects.equals(getUsers(),
-                role.getUsers());
+        return getId() == role.getId() && Objects.equals(getName(), role.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getUsers());
+        return Objects.hash(getId(), getName());
     }
 }
